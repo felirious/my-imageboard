@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+    <title>Imageboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="main">
+        <header @click="closeModal">
+            <img @click="closeModal" id="logo" src="canvas.png">
+            <h1 @click="closeModal">Felix's Fantastic Imageboard</h1>
+        </header>
+        <div v-if="id" class="wrapper">
+        <!-- stuff that lives inside the data object in script file -->
+        <image-modal v-if="id" :id="id"></image-modal>
+        </div>
+        <div class="form">
+            <form>
+                <input v-model="title" type="text" name="title" placeholder="Title">
+                <input v-model="description" type="text" name="description" placeholder="Description">
+                <input v-model="username" type="text" name="username" placeholder="Username">
+                <br>
+                <br>
+                <input @change="handleChange" type="file" name="file" accept="image/*">
+                <!-- "handleClick" = name of method -->
+                <button type="submit" id="submit" @click="handleSubmit">SUBMIT</button>
+            </form>
+        </div>
+        <div id="middlestuff">
+            <div class="left-bar" @click="closeModal"></div>
+            <div @click="closeModal" class="imagecontainer">
+                <div @click="closeModal" v-for="card in cards" class="card">
+                    <a :href="'#' + card.id">
+                        <img :src="card.url" @click="closeModal" class="image">
+                        <h3>{{card.title}}</h3>
+                    </a>
+                </div>
+            </div>
+            <div @click="closeModal" class="right-bar"></div>
+        </div>
+
+        <br>
+        <div v-if="more" class="button">
+            <button type="button" name="more" id="more" @click="loadMoreImages" > MORE... </button>
+        </div>
+    </div>
+
+
+    <footer></footer>
+
+    <script id="image-modal" type="text/x-template">
+    <!-- <div id="modal-wrapper"> -->
+      <div class="modal-content">
+          <div id="innermodal">
+              <a href="#" class="close" @click="sendMessage"></a>
+              <h1 id="title"><font size="+5">{{title}}</font></h1>
+                <div>
+                    <img id="bigimage" :src="url">
+                </div>
+                <br>
+              <h2>{{description}}</h2>
+              <h3>Uploaded by: {{username}}</h3>
+             <br><br>
+              <section class="comments">
+                  <h2>User Comments</h2>
+                  <br>
+                  <h4 v-for="comment in comments">{{comment.username}}: {{comment.comment}}</h4>
+              </section>
+              <br>
+              <br>
+
+              <form>
+                  <input v-model="comment" value="" type="text" name="comment" placeholder="Type your comment here">
+                  <input v-model="username" value="" type="text" name="username" placeholder="Your username">
+                  <button type="submit" @click="handleSubmitComment">SUBMIT</button>
+              </form>
+
+          </div>
+      <!-- </div> -->
+    </div>
+    </script>
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js" charset="utf-8"></script>
+</body>
+</html
